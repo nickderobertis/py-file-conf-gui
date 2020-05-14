@@ -20,6 +20,13 @@ PM_DEFAULTS = dict(
 )
 
 
+def full_pm_setup(**kwargs) -> PipelineManager:
+    write_a_function_to_pipeline_dict_file()
+    pm = create_pm(**kwargs)
+    pm.load()
+    return pm
+
+
 def create_pm(**kwargs) -> PipelineManager:
     all_kwargs = deepcopy(PM_DEFAULTS)
     all_kwargs.update(**kwargs)
@@ -75,6 +82,4 @@ if __name__ == '__main__':
     if args.delete:
         delete_pm_project()
     else:
-        write_a_function_to_pipeline_dict_file()
-        pm = create_pm()
-        pm.load()
+        pm = full_pm_setup()

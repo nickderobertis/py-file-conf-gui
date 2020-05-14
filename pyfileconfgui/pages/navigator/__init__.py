@@ -1,1 +1,1 @@
-from pyfileconfgui.pages.navigator.main import layout
+from pyfileconfgui.pages.navigator.main import get_layout
