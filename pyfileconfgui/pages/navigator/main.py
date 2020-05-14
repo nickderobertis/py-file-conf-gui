@@ -1,10 +1,18 @@
+import json
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from pyfileconfgui.main import PyFileConfGUI
+
 import dash_core_components as dcc
 import dash_html_components as html
 from dash import dash
 
 
-def get_layout(app: dash.Dash) -> html.Div:
+def get_layout(gui: 'PyFileConfGUI') -> html.Div:
     return html.Div([
+        html.Label('Pyfileconf Items'),
+        html.P(json.dumps(gui.structure)),
         html.Label('Dropdown'),
         dcc.Dropdown(
             options=[

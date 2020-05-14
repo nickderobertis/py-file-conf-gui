@@ -5,6 +5,5 @@ from tests.pfc import full_pm_setup
 
 if __name__ == '__main__':
     pm = full_pm_setup()
-    s = Selector()
-    gui = PyFileConfGUI(s)
+    gui = PyFileConfGUI()
     gui.run_server(debug=True)
