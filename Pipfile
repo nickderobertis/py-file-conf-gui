@@ -24,6 +24,8 @@ cruft = "*"
 pdbpp = "*"
 dash = "*"
 pyfileconf = "*"
+jupyterlab = "*"
+dash_keyed_file_browser = "*"
 
 [requires]
 python_version = "3.7"
