@@ -1,11 +1,12 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict
+
+from pyfileconfgui.callbacks import add_callbacks
 
 if TYPE_CHECKING:
     from pyfileconfgui.main import PyFileConfGUI
 
 import dash_core_components as dcc
 import dash_html_components as html
-from dash import dash
 from dash.dependencies import Input, Output
 
 from pyfileconfgui.pages import navigator
@@ -26,3 +27,4 @@ def add_layout(gui: 'PyFileConfGUI'):
         else:
             return '404'
 
+    add_callbacks(gui)

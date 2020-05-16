@@ -1,5 +1,7 @@
 import json
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, List
+
+from dash.dependencies import Output, Input
 
 if TYPE_CHECKING:
     from pyfileconfgui.main import PyFileConfGUI
@@ -11,8 +13,15 @@ from dash import dash
 
 
 def get_layout(gui: 'PyFileConfGUI') -> html.Div:
-    return html.Div([
+    app = gui.app
+
+    layout = html.Div([
         html.Label('Pyfileconf Items'),
         html.P(json.dumps(gui.structure)),
-        KeyedFileBrowser(gui.file_objs),
+        KeyedFileBrowser(gui.file_objs, id='kfb'),
+        html.H2('Running Item'),
+        html.P(id='run-input'),
+        html.Div(id='run-output'),
     ])
+
+    return layout
