@@ -19,9 +19,26 @@ def get_layout(gui: 'PyFileConfGUI') -> html.Div:
         html.Label('Pyfileconf Items'),
         html.P(json.dumps(gui.structure)),
         KeyedFileBrowser(gui.file_objs, id='kfb'),
+        _get_create_entry_layout(gui),
         html.H2('Running Item'),
         html.P(id='run-input'),
         html.Div(id='run-output'),
+    ])
+
+    return layout
+
+
+def _get_create_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
+    app = gui.app
+
+    layout = html.Div([
+        html.H3('Create Item'),
+        html.Label('Section Path'),
+        dcc.Input(id='section-path-input', placeholder='my.section.path', value=''),
+        html.Label('Function/Class Import  (optional)'),
+        dcc.Input(id='function-class-import-input', placeholder='from mymod import Stuff', value=''),
+        html.Button('Submit', id='create-item-submit-button'),
+        html.Div(id='create-item-output')
     ])
 
     return layout
