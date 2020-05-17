@@ -1,0 +1,27 @@
+pyfileconfgui.dash\_ext package
+===============================
+
+.. automodule:: pyfileconfgui.dash_ext
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+pyfileconfgui.dash\_ext.component module
+----------------------------------------
+
+.. automodule:: pyfileconfgui.dash_ext.component
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.dash\_ext.router module
+-------------------------------------
+
+.. automodule:: pyfileconfgui.dash_ext.router
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

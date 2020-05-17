@@ -1,0 +1,60 @@
+pyfileconfgui package
+=====================
+
+.. automodule:: pyfileconfgui
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+   pyfileconfgui.dash_ext
+   pyfileconfgui.pages
+   pyfileconfgui.pfc
+
+Submodules
+----------
+
+pyfileconfgui.app module
+------------------------
+
+.. automodule:: pyfileconfgui.app
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.component module
+------------------------------
+
+.. automodule:: pyfileconfgui.component
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.index module
+--------------------------
+
+.. automodule:: pyfileconfgui.index
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.main module
+-------------------------
+
+.. automodule:: pyfileconfgui.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.runner module
+---------------------------
+
+.. automodule:: pyfileconfgui.runner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

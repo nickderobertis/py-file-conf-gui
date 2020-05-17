@@ -1,0 +1,14 @@
+pyfileconfgui.pages package
+===========================
+
+.. automodule:: pyfileconfgui.pages
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+   pyfileconfgui.pages.navigator

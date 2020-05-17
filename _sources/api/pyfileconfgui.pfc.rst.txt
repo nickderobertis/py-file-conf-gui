@@ -1,0 +1,27 @@
+pyfileconfgui.pfc package
+=========================
+
+.. automodule:: pyfileconfgui.pfc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+pyfileconfgui.pfc.extract module
+--------------------------------
+
+.. automodule:: pyfileconfgui.pfc.extract
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.pfc.reformat module
+---------------------------------
+
+.. automodule:: pyfileconfgui.pfc.reformat
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

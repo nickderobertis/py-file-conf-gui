@@ -1,0 +1,7 @@
+pyfileconfgui
+=============
+
+.. toctree::
+   :maxdepth: 4
+
+   pyfileconfgui

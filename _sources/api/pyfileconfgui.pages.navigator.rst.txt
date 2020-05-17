@@ -1,0 +1,43 @@
+pyfileconfgui.pages.navigator package
+=====================================
+
+.. automodule:: pyfileconfgui.pages.navigator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+pyfileconfgui.pages.navigator.create module
+-------------------------------------------
+
+.. automodule:: pyfileconfgui.pages.navigator.create
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.pages.navigator.edit module
+-----------------------------------------
+
+.. automodule:: pyfileconfgui.pages.navigator.edit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.pages.navigator.main module
+-----------------------------------------
+
+.. automodule:: pyfileconfgui.pages.navigator.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.pages.navigator.run module
+----------------------------------------
+
+.. automodule:: pyfileconfgui.pages.navigator.run
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
