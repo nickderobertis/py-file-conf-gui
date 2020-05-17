@@ -1,30 +1,28 @@
-from typing import TYPE_CHECKING, Dict
-
-from pyfileconfgui.callbacks import add_callbacks
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from pyfileconfgui.main import PyFileConfGUI
 
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
+from pyfileconfgui.component import PFCGuiComponent
+from pyfileconfgui.dash_ext.router import RouterComponent
+from pyfileconfgui.pages.navigator.main import NavigatorComponent
 
-from pyfileconfgui.pages import navigator
+
+class PFCGUIRouterComponent(PFCGuiComponent, RouterComponent):
+    pass
 
 
 def add_layout(gui: 'PyFileConfGUI'):
     app = gui.app
-    app.layout = html.Div([
-        dcc.Location(id='url', refresh=False),
-        html.Div(id='page-content')
-    ])
 
-    @app.callback(Output('page-content', 'children'),
-                  [Input('url', 'pathname')])
-    def display_page(pathname):
-        if pathname in ('/', '/navigator'):
-            return navigator.get_layout(gui)
-        else:
-            return '404'
+    nav_component = NavigatorComponent('navigator-root')
 
-    add_callbacks(gui)
+    routes = {
+        '/': nav_component,
+        '/navigator': nav_component
+    }
+
+    layout_component = PFCGUIRouterComponent('layout-root', routes)
+
+    app.layout = layout_component.component
+
