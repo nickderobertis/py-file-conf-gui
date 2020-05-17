@@ -1,3 +1,4 @@
+import time
 from io import StringIO
 from typing import Union, Sequence
 import sys
@@ -57,13 +58,19 @@ class RunEntryComponent(PFCGuiComponent):
         orig_stdout = sys.stdout
         sys.stdout = self.log_buffer
         output = self.gui.runner.run(path)
+        # TODO: run item gets stuck polling if run finishes too fast
+        #
+        # For now, just sleeping the same amount as the interval to ensure
+        # that the interval happens at least once. Tried hooking stop interval
+        # to final output but didn't work.
+        time.sleep(0.5)
         sys.stdout = orig_stdout
         self.is_running = False
         return str(output)
 
     def set_polling(self, path: str, run_output: str):
         if self.is_running:
-            return dcc.Interval('run-interval', 200)
+            return dcc.Interval('run-interval', 500)
         return None
 
     def stream_output(self, n_intervals: int):
