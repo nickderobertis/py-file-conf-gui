@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, Sequence, Union
+from typing import TYPE_CHECKING, Sequence, Union, Mapping
 
 import dash
 from dash.development.base_component import Component
@@ -11,7 +11,7 @@ from pyfileconfgui.dash_ext.component import DashPythonComponent
 
 class RouterComponent(DashPythonComponent):
 
-    def __init__(self, id: str, routes: Dict[str, DashPythonComponent]):
+    def __init__(self, id: str, routes: Mapping[str, DashPythonComponent]):
         self.routes = routes
         super().__init__(id)
 

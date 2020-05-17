@@ -10,7 +10,7 @@ from pyfileconf.views.object import ObjectView
 
 def full_dict_from_selector(s: Selector) -> dict:
     pc_dict = s._structure.copy()
-    out_dict = {}
+    out_dict: dict = {}
     pc: Collection
     for manager_key, manager_dict in pc_dict.items():
         out_dict[manager_key] = {}

@@ -7,6 +7,7 @@ from pyfileconfgui.dash_ext.component import DashPythonComponent
 
 
 class PFCGuiComponent(DashPythonComponent):
+    gui: 'PyFileConfGUI'
 
     @classmethod
     def register_app(cls, gui: 'PyFileConfGUI'):
