@@ -11,7 +11,7 @@ from pyfileconfgui.dash_ext.component import DashPythonComponent
 
 
 def edit_item(path: str):
-    # TODO [$5ec1b24c55d798000782819f]: read file and instantiate editor
+    # TODO [#1]: read file and instantiate editor
     return path
 
 
