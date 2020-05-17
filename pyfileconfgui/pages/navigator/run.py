@@ -58,7 +58,7 @@ class RunEntryComponent(PFCGuiComponent):
         orig_stdout = sys.stdout
         sys.stdout = self.log_buffer
         output = self.gui.runner.run(path)
-        # TODO: run item gets stuck polling if run finishes too fast
+        # TODO [$5ec1b24c55d79800078281a0]: run item gets stuck polling if run finishes too fast
         #
         # For now, just sleeping the same amount as the interval to ensure
         # that the interval happens at least once. Tried hooking stop interval
