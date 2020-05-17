@@ -3,6 +3,7 @@ from typing import Dict, List
 from pyfileconf import Selector
 
 from pyfileconfgui.app import create_app
+from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.index import add_layout
 from pyfileconfgui.pfc.extract import full_dict_from_selector
 from pyfileconfgui.pfc.reformat import nested_dict_to_paths
@@ -15,10 +16,10 @@ class PyFileConfGUI:
     s: Selector
 
     def __init__(self):
-
         self.refresh()
         self.runner = PFCRunner()
         self.app = create_app()
+        PFCGuiComponent.register_app(self)
         add_layout(self)
 
     def run_server(self, **kwargs):

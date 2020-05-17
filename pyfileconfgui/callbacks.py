@@ -57,9 +57,3 @@ def add_callbacks(gui: 'PyFileConfGUI'):
             return dash.no_update
         path = selected_file['key']
         return path
-
-    @app.callback(Output('editor-output', 'children'),
-                  [Input('edit-item-name-output', 'children')])
-    def edit_item(path: str):
-        # TODO: read file and instantiate editor
-        return path

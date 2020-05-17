@@ -1,7 +1,12 @@
 import json
-from typing import TYPE_CHECKING, Dict, List
+from typing import TYPE_CHECKING, Dict, List, Union, Sequence
 
 from dash.dependencies import Output, Input
+from dash.development.base_component import Component
+
+from pyfileconfgui.component import PFCGuiComponent
+from pyfileconfgui.dash_ext.component import DashPythonComponent
+from pyfileconfgui.pages.navigator.edit import EditItemComponent
 
 if TYPE_CHECKING:
     from pyfileconfgui.main import PyFileConfGUI
@@ -12,19 +17,22 @@ from dash_keyed_file_browser import KeyedFileBrowser
 from dash import dash
 
 
-def get_layout(gui: 'PyFileConfGUI') -> html.Div:
-    app = gui.app
+class NavigatorComponent(PFCGuiComponent):
 
-    layout = html.Div([
-        html.Label('Pyfileconf Items'),
-        html.P(json.dumps(gui.structure)),
-        KeyedFileBrowser(gui.file_objs, id='kfb'),
-        _get_create_entry_layout(gui),
-        _get_run_entry_layout(gui),
-        _get_edit_entry_layout(gui),
-    ])
+    @property
+    def layout(self) -> Sequence[Union['DashPythonComponent', Component]]:
+        app = self.gui.app
 
-    return layout
+        layout = [
+            html.Label('Pyfileconf Items'),
+            html.P(json.dumps(self.gui.structure)),
+            KeyedFileBrowser(self.gui.file_objs, id='kfb'),
+            _get_create_entry_layout(self.gui),
+            _get_run_entry_layout(self.gui),
+            EditItemComponent('edit-item'),
+        ]
+
+        return layout
 
 
 def _get_create_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
@@ -54,14 +62,3 @@ def _get_run_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
 
     return layout
 
-
-def _get_edit_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
-    app = gui.app
-
-    layout = html.Div([
-        html.H2('Edit Item'),
-        html.P(id='edit-item-name-output'),
-        html.Div(id='editor-output'),
-    ])
-
-    return layout
