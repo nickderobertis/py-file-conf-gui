@@ -335,10 +335,10 @@
         },
         "dash-keyed-file-browser": {
             "hashes": [
-                "sha256:159794816d60159d1c23a3c2642660463c337e1b4ed40e6524fb205e875fd3e1"
+                "sha256:a12c5e5b46a2b733b09222c1b4d439e7f608b68c0f8c3b4ad7848b816b0da946"
             ],
             "index": "pypi",
-            "version": "==0.0.1"
+            "version": "==0.0.2"
         },
         "dash-renderer": {
             "hashes": [

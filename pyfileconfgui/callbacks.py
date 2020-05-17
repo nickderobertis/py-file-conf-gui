@@ -14,7 +14,7 @@ def add_callbacks(gui: 'PyFileConfGUI'):
     app = gui.app
 
     @app.callback(Output('run-input', 'children'),
-                  [Input('kfb', 'selectedFile')])
+                  [Input('kfb', 'openFile')])
     def show_running_item(selected_file: Dict[str, str]):
         if not selected_file:
             return dash.no_update
@@ -49,3 +49,17 @@ def add_callbacks(gui: 'PyFileConfGUI'):
     def update_files_after_creating_item(updated_message: str):
         gui.refresh()
         return gui.file_objs
+
+    @app.callback(Output('edit-item-name-output', 'children'),
+                  [Input('kfb', 'selectedFile')])
+    def show_editing_item(selected_file: Dict[str, str]):
+        if not selected_file:
+            return dash.no_update
+        path = selected_file['key']
+        return path
+
+    @app.callback(Output('editor-output', 'children'),
+                  [Input('edit-item-name-output', 'children')])
+    def edit_item(path: str):
+        # TODO: read file and instantiate editor
+        return path
