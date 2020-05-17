@@ -6,6 +6,7 @@ from dash.development.base_component import Component
 
 from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.component import DashPythonComponent
+from pyfileconfgui.pages.navigator.create import CreateEntryComponent
 from pyfileconfgui.pages.navigator.edit import EditItemComponent
 
 if TYPE_CHECKING:
@@ -41,7 +42,7 @@ class NavigatorComponent(PFCGuiComponent):
             html.Label('Pyfileconf Items'),
             html.P(json.dumps(self.gui.structure)),
             KeyedFileBrowser(self.gui.file_objs, id='kfb'),
-            _get_create_entry_layout(self.gui),
+            CreateEntryComponent('create-item'),
             _get_run_entry_layout(self.gui),
             EditItemComponent('edit-item'),
         ]
@@ -67,26 +68,11 @@ class NavigatorComponent(PFCGuiComponent):
             Output('edit-item-name-output', 'children'),
             [Input('kfb', 'selectedFile')]
         )
+        super().add_callbacks(app)
 
     def update_files_after_creating_item(self, updated_message: str):
         self.gui.refresh()
         return self.gui.file_objs
-
-
-def _get_create_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
-    app = gui.app
-
-    layout = html.Div([
-        html.H3('Create Item'),
-        html.Label('Section Path'),
-        dcc.Input(id='section-path-input', placeholder='my.section.path', value=''),
-        html.Label('Function/Class Import  (optional)'),
-        dcc.Input(id='function-class-import-input', placeholder='from mymod import Stuff', value=''),
-        html.Button('Submit', id='create-item-submit-button'),
-        html.Div(id='create-item-output')
-    ])
-
-    return layout
 
 
 def _get_run_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
