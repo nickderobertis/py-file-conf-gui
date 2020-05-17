@@ -1,4 +1,5 @@
 import importlib
+import traceback
 from typing import Union, Sequence, Optional
 
 import dash
@@ -39,9 +40,16 @@ class CreateEntryComponent(PFCGuiComponent):
         super().add_callbacks(app)
 
     def create_item(self, n_clicks: int, section_path: str, function_class_import: Optional[str]):
+        try:
+            return self._create_item(n_clicks, section_path, function_class_import)
+        except Exception as e:
+            tb = traceback.format_exc()
+            return dcc.Markdown(f'```python\n{tb}```', style={'overflow': 'auto'})
+
+    def _create_item(self, n_clicks: int, section_path: str, function_class_import: Optional[str]):
         if not section_path:
             return dash.no_update
-        if function_class_import is not None:
+        if function_class_import:
             imp = ObjectImportStatement.from_str(function_class_import)
             if len(imp.objs) != 1:
                 raise ValueError(f'must have exactly one object import, got {imp.objs}')
