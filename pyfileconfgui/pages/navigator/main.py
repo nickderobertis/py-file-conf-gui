@@ -41,7 +41,6 @@ class NavigatorComponent(PFCGuiComponent):
 
         layout = [
             html.Label('Pyfileconf Items'),
-            html.P(json.dumps(self.gui.structure)),
             KeyedFileBrowser(self.gui.file_objs, id='kfb'),
             CreateEntryComponent('create-item-root'),
             RunEntryComponent('run-item-root'),

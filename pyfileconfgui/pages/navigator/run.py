@@ -21,9 +21,9 @@ class RunEntryComponent(PFCGuiComponent):
         return [
             html.H2('Running Item'),
             html.P(id='run-input'),
-            html.Div(id='run-output'),
             html.Div(id='run-interval-container'),
             html.Div(id='run-console-output'),
+            html.Div(id='run-output'),
         ]
 
     def add_callbacks(self, app: dash.Dash) -> None:
