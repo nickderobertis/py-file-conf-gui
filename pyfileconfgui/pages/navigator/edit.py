@@ -32,3 +32,4 @@ class EditItemComponent(PFCGuiComponent):
             Output('editor-output', 'children'),
             [Input('edit-item-name-output', 'children')]
         )
+        super().add_callbacks(app)

@@ -17,6 +17,20 @@ from dash_keyed_file_browser import KeyedFileBrowser
 from dash import dash
 
 
+def show_running_item(selected_file: Dict[str, str]):
+    if not selected_file:
+        return dash.no_update
+    path = selected_file['key']
+    return path
+
+
+def show_editing_item(selected_file: Dict[str, str]):
+    if not selected_file:
+        return dash.no_update
+    path = selected_file['key']
+    return path
+
+
 class NavigatorComponent(PFCGuiComponent):
 
     @property
@@ -33,6 +47,30 @@ class NavigatorComponent(PFCGuiComponent):
         ]
 
         return layout
+
+    def add_callbacks(self, app: dash.Dash) -> None:
+        self.add_callback(
+            app,
+            show_running_item,
+            Output('run-input', 'children'),
+            [Input('kfb', 'openFile')]
+        )
+        self.add_callback(
+            app,
+            self.update_files_after_creating_item,
+            Output('kfb', 'files'),
+            [Input('create-item-output', 'children')]
+        )
+        self.add_callback(
+            app,
+            show_editing_item,
+            Output('edit-item-name-output', 'children'),
+            [Input('kfb', 'selectedFile')]
+        )
+
+    def update_files_after_creating_item(self, updated_message: str):
+        self.gui.refresh()
+        return self.gui.file_objs
 
 
 def _get_create_entry_layout(gui: 'PyFileConfGUI') -> html.Div:

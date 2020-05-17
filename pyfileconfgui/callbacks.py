@@ -13,14 +13,6 @@ from dash.dependencies import Output, Input, State
 def add_callbacks(gui: 'PyFileConfGUI'):
     app = gui.app
 
-    @app.callback(Output('run-input', 'children'),
-                  [Input('kfb', 'openFile')])
-    def show_running_item(selected_file: Dict[str, str]):
-        if not selected_file:
-            return dash.no_update
-        path = selected_file['key']
-        return path
-
     @app.callback(Output('run-output', 'children'),
                   [Input('run-input', 'children')])
     def run_item(path: str):
@@ -44,16 +36,3 @@ def add_callbacks(gui: 'PyFileConfGUI'):
         output = gui.runner.create(section_path, func_or_class)
         return f'Created {section_path}'
 
-    @app.callback(Output('kfb', 'files'),
-                  [Input('create-item-output', 'children')])
-    def update_files_after_creating_item(updated_message: str):
-        gui.refresh()
-        return gui.file_objs
-
-    @app.callback(Output('edit-item-name-output', 'children'),
-                  [Input('kfb', 'selectedFile')])
-    def show_editing_item(selected_file: Dict[str, str]):
-        if not selected_file:
-            return dash.no_update
-        path = selected_file['key']
-        return path
