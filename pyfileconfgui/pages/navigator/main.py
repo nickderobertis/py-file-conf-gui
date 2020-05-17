@@ -8,6 +8,7 @@ from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.component import DashPythonComponent
 from pyfileconfgui.pages.navigator.create import CreateEntryComponent
 from pyfileconfgui.pages.navigator.edit import EditItemComponent
+from pyfileconfgui.pages.navigator.run import RunEntryComponent
 
 if TYPE_CHECKING:
     from pyfileconfgui.main import PyFileConfGUI
@@ -42,9 +43,9 @@ class NavigatorComponent(PFCGuiComponent):
             html.Label('Pyfileconf Items'),
             html.P(json.dumps(self.gui.structure)),
             KeyedFileBrowser(self.gui.file_objs, id='kfb'),
-            CreateEntryComponent('create-item'),
-            _get_run_entry_layout(self.gui),
-            EditItemComponent('edit-item'),
+            CreateEntryComponent('create-item-root'),
+            RunEntryComponent('run-item-root'),
+            EditItemComponent('edit-item-root'),
         ]
 
         return layout
@@ -75,14 +76,4 @@ class NavigatorComponent(PFCGuiComponent):
         return self.gui.file_objs
 
 
-def _get_run_entry_layout(gui: 'PyFileConfGUI') -> html.Div:
-    app = gui.app
-
-    layout = html.Div([
-        html.H2('Running Item'),
-        html.P(id='run-input'),
-        html.Div(id='run-output'),
-    ])
-
-    return layout
 

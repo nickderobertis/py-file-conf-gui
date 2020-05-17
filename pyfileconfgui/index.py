@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from pyfileconfgui.main import PyFileConfGUI
 
-from pyfileconfgui.callbacks import add_callbacks
 from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.router import RouterComponent
 from pyfileconfgui.pages.navigator.main import NavigatorComponent
@@ -27,4 +26,3 @@ def add_layout(gui: 'PyFileConfGUI'):
 
     app.layout = layout_component.component
 
-    add_callbacks(gui)
