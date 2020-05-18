@@ -1,4 +1,5 @@
 import time
+import traceback
 from io import StringIO
 from typing import Union, Sequence
 import sys
@@ -22,9 +23,10 @@ class RunEntryComponent(PFCGuiComponent):
         return [
             html.H2('Running Item'),
             html.P(id='run-input'),
-            html.Div(id='run-interval-container'),
             html.Div(id='run-console-output'),
             html.Div(id='run-output'),
+            dcc.Interval('run-check-interval', 2000),
+            dcc.Interval('run-poll-interval', 500, disabled=True),
         ]
 
     def add_callbacks(self, app: dash.Dash) -> None:
@@ -37,14 +39,14 @@ class RunEntryComponent(PFCGuiComponent):
         self.add_callback(
             app,
             self.set_polling,
-            Output('run-interval-container', 'children'),
-            [Input('run-input', 'children'), Input('run-console-output', 'children')]
+            Output('run-poll-interval', 'disabled'),
+            [Input('run-input', 'children'), Input('run-check-interval', 'n_intervals')]
         )
         self.add_callback(
             app,
             self.stream_output,
             Output('run-console-output', 'children'),
-            [Input('run-interval', 'n_intervals')]
+            [Input('run-poll-interval', 'n_intervals'), Input('run-check-interval', 'n_intervals')]
         )
         super().add_callbacks(app)
 
@@ -57,23 +59,23 @@ class RunEntryComponent(PFCGuiComponent):
         self.is_running = True
         orig_stdout = sys.stdout
         sys.stdout = self.log_buffer
-        output = self.gui.runner.run(path)
-        # TODO [#2]: run item gets stuck polling if run finishes too fast
-        #
-        # For now, just sleeping the same amount as the interval to ensure
-        # that the interval happens at least once. Tried hooking stop interval
-        # to final output but didn't work.
-        time.sleep(0.5)
+        try:
+            output = self.gui.runner.run(path)
+        except Exception as e:
+            sys.stdout = orig_stdout
+            tb = traceback.format_exc()
+            self.is_running = False
+            return dcc.Markdown(f'```python\n{tb}\n```', style={'overflow': 'auto'})
         sys.stdout = orig_stdout
         self.is_running = False
         return str(output)
 
     def set_polling(self, path: str, run_output: str):
         if self.is_running:
-            return dcc.Interval('run-interval', 500)
-        return None
+            return False
+        return True
 
-    def stream_output(self, n_intervals: int):
+    def stream_output(self, n_intervals: int, output):
         return dcc.Markdown(f'```python\n{self.log_output}\n```', style={'overflow': 'auto'})
 
     def reset_log(self):
