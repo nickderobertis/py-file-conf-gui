@@ -11,6 +11,8 @@ import dash_html_components as html
 
 from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.component import DashPythonComponent
+from pyfileconfgui.dash_ext.python import PythonBlockComponent
+from pyfileconfgui.dash_ext.tb import TracebackComponent
 
 
 class RunEntryComponent(PFCGuiComponent):
@@ -62,9 +64,8 @@ class RunEntryComponent(PFCGuiComponent):
             output = self.gui.runner.run(path)
         except Exception as e:
             sys.stdout = orig_stdout
-            tb = traceback.format_exc()
             self.is_running = False
-            return dcc.Markdown(f'```python\n{tb}\n```', style={'overflow': 'auto'})
+            return TracebackComponent('run-output-tb').component
         sys.stdout = orig_stdout
         self.is_running = False
         return str(output)
@@ -78,7 +79,7 @@ class RunEntryComponent(PFCGuiComponent):
         return True
 
     def stream_output(self, n_poll_intervals: int, n_check_intervals: int):
-        return dcc.Markdown(f'```python\n{self.log_output}\n```', style={'overflow': 'auto'})
+        return PythonBlockComponent('run-output-python-block', self.log_output).component
 
     def reset_log(self):
         self.log_buffer.truncate(0)
