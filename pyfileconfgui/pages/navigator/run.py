@@ -26,11 +26,11 @@ class RunEntryComponent(PFCGuiComponent):
             html.P(id='run-input'),
             html.Div(id='run-console-output'),
             dcc.Loading(html.Div(id='run-output')),
-            dcc.Interval('run-check-interval', 2000),
             dcc.Interval('run-poll-interval', 500, disabled=True),
         ]
 
     def add_callbacks(self, app: dash.Dash) -> None:
+        from pyfileconfgui.pages.navigator.refresh import REFRESH_INTERVAL_ID
         self.add_callback(
             app,
             self.run_item,
@@ -41,13 +41,13 @@ class RunEntryComponent(PFCGuiComponent):
             app,
             self.set_polling,
             Output('run-poll-interval', 'disabled'),
-            [Input('run-input', 'children'), Input('run-check-interval', 'n_intervals')]
+            [Input('run-input', 'children'), Input(REFRESH_INTERVAL_ID, 'n_intervals')]
         )
         self.add_callback(
             app,
             self.stream_output,
             Output('run-console-output', 'children'),
-            [Input('run-poll-interval', 'n_intervals'), Input('run-check-interval', 'n_intervals')]
+            [Input('run-poll-interval', 'n_intervals'), Input(REFRESH_INTERVAL_ID, 'n_intervals')]
         )
         super().add_callbacks(app)
 
