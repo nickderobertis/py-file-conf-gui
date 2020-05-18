@@ -8,9 +8,9 @@ from pyfileconfgui.dash_ext.component import DashPythonComponent
 
 class PythonBlockComponent(DashPythonComponent):
 
-    def __init__(self, id: str, content: str):
+    def __init__(self, id: str, content: str, **kwargs):
         self.content = content
-        super().__init__(id)
+        super().__init__(id, **kwargs)
 
     @property
     def layout(self) -> Sequence[Union['DashPythonComponent', Component]]:

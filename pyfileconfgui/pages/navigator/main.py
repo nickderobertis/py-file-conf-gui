@@ -1,5 +1,4 @@
-import json
-from typing import TYPE_CHECKING, Dict, List, Union, Sequence
+from typing import TYPE_CHECKING, Dict, Union, Sequence
 
 from dash.dependencies import Output, Input
 from dash.development.base_component import Component
@@ -8,10 +7,10 @@ from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.component import DashPythonComponent
 from pyfileconfgui.pages.navigator.create import CreateEntryComponent
 from pyfileconfgui.pages.navigator.edit import EditItemComponent
+from pyfileconfgui.pages.navigator.refresh import REFRESH_INTERVAL_ID
+from pyfileconfgui.pages.navigator.reload import ReloadPFCComponent
 from pyfileconfgui.pages.navigator.run import RunEntryComponent
 
-if TYPE_CHECKING:
-    from pyfileconfgui.main import PyFileConfGUI
 
 import dash_core_components as dcc
 import dash_html_components as html
@@ -41,6 +40,8 @@ class NavigatorComponent(PFCGuiComponent):
 
         layout = [
             html.Label('Pyfileconf Items'),
+            dcc.Interval(REFRESH_INTERVAL_ID, 2000),
+            ReloadPFCComponent('reload-pfc-root'),
             KeyedFileBrowser(self.gui.file_objs, id='kfb'),
             CreateEntryComponent('create-item-root'),
             RunEntryComponent('run-item-root'),

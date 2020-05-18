@@ -10,8 +10,9 @@ class DashPythonComponent:
     app: Optional[dash.Dash] = None
     _callback_output_ids: List[str] = []
 
-    def __init__(self, id: str):
+    def __init__(self, id: str, **kwargs):
         self.id = id
+        self.component_kwargs = kwargs
 
         if self.app is not None:
             self.add_callbacks(self.app)
@@ -26,7 +27,7 @@ class DashPythonComponent:
             else:
                 dash_comp = comp
             dash_layout.append(dash_comp)
-        return html.Div(dash_layout, id=self.id)
+        return html.Div(dash_layout, id=self.id, **self.component_kwargs)
 
     @property
     def layout(self) -> Sequence[Union['DashPythonComponent', Component]]:

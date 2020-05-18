@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, Union, Callable, Type
+from typing import Dict, Any, Optional, Union, Callable, Type, Sequence
 
 from pyfileconf import Selector, PipelineManager
 
@@ -29,4 +29,10 @@ class PFCRunner:
     @property
     def managers(self) -> Dict[str, PipelineManager]:
         return self.s._managers
+
+    def reload(self, manager_names: Optional[Sequence[str]] = None):
+        for manager in self.managers.values():
+            if manager_names and manager.name not in manager_names:
+                continue
+            manager.reload()
 
