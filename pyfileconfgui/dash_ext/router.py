@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Sequence, Union, Mapping
+from typing import TYPE_CHECKING, Sequence, Union, Mapping, List
 
 import dash
 from dash.development.base_component import Component
@@ -16,11 +16,17 @@ class RouterComponent(DashPythonComponent):
         super().__init__(id)
 
     @property
-    def layout(self) -> Sequence[Union['DashPythonComponent', Component]]:
+    def layout(self) -> List[Union['DashPythonComponent', Component]]:
         return [
             dcc.Location(id='url', refresh=False),
             html.Div(id='page-content')
         ]
+
+    @property
+    def validation_component(self) -> Component:
+        route_components = [comp for comp in self.routes.values()]
+        component = html.Div(self.layout + route_components)
+        return component
 
     def add_callbacks(self, app: dash.Dash) -> None:
         self.add_callback(
