@@ -30,3 +30,7 @@ class PFCRunner:
     def managers(self) -> Dict[str, PipelineManager]:
         return self.s._managers
 
+    def reload(self):
+        for manager in self.managers.values():
+            manager.reload()
+
