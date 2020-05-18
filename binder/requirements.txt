@@ -1,4 +1,4 @@
 py-file-conf-gui
+dash_keyed_file_browser
 dash
 pyfileconf
-dash_keyed_file_browser

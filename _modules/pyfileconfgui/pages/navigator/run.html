@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconfgui.pages.navigator.run &mdash; py-file-conf-gui 0.1.0 documentation</title>
+  <title>pyfileconfgui.pages.navigator.run &mdash; py-file-conf-gui 0.1.1 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -224,7 +224,7 @@
         <span class="n">orig_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_buffer</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="c1"># TODO: run item gets stuck polling if run finishes too fast</span>
+        <span class="c1"># TODO [#2]: run item gets stuck polling if run finishes too fast</span>
         <span class="c1">#</span>
         <span class="c1"># For now, just sleeping the same amount as the interval to ensure</span>
         <span class="c1"># that the interval happens at least once. Tried hooking stop interval</span>
