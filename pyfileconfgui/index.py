@@ -25,4 +25,5 @@ def add_layout(gui: 'PyFileConfGUI'):
     layout_component = PFCGUIRouterComponent('layout-root', routes)
 
     app.layout = layout_component.component
+    app.validation_layout = layout_component.validation_component
 
