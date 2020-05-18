@@ -1,4 +1,3 @@
-import time
 import traceback
 from io import StringIO
 from typing import Union, Sequence
@@ -70,12 +69,15 @@ class RunEntryComponent(PFCGuiComponent):
         self.is_running = False
         return str(output)
 
-    def set_polling(self, path: str, run_output: str):
+    def set_polling(self, path: str, n_check_intervals: int):
+        # Sets disabled for poll interval
         if self.is_running:
+            # is running, poll should not be disabled
             return False
+        # not running, poll should be disabled
         return True
 
-    def stream_output(self, n_intervals: int, output):
+    def stream_output(self, n_poll_intervals: int, n_check_intervals: int):
         return dcc.Markdown(f'```python\n{self.log_output}\n```', style={'overflow': 'auto'})
 
     def reset_log(self):
