@@ -17,10 +17,26 @@ pyfileconfgui.dash\_ext.component module
    :undoc-members:
    :show-inheritance:
 
+pyfileconfgui.dash\_ext.python module
+-------------------------------------
+
+.. automodule:: pyfileconfgui.dash_ext.python
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyfileconfgui.dash\_ext.router module
 -------------------------------------
 
 .. automodule:: pyfileconfgui.dash_ext.router
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.dash\_ext.tb module
+---------------------------------
+
+.. automodule:: pyfileconfgui.dash_ext.tb
    :members:
    :undoc-members:
    :show-inheritance:

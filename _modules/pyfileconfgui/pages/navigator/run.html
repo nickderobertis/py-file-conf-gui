@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconfgui.pages.navigator.run &mdash; py-file-conf-gui 0.1.1 documentation</title>
+  <title>pyfileconfgui.pages.navigator.run &mdash; py-file-conf-gui 0.1.2 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.2
               </div>
             
           
@@ -164,7 +164,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyfileconfgui.pages.navigator.run</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span></span><span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Sequence</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -177,6 +177,8 @@
 
 <span class="kn">from</span> <span class="nn">pyfileconfgui.component</span> <span class="kn">import</span> <span class="n">PFCGuiComponent</span>
 <span class="kn">from</span> <span class="nn">pyfileconfgui.dash_ext.component</span> <span class="kn">import</span> <span class="n">DashPythonComponent</span>
+<span class="kn">from</span> <span class="nn">pyfileconfgui.dash_ext.python</span> <span class="kn">import</span> <span class="n">PythonBlockComponent</span>
+<span class="kn">from</span> <span class="nn">pyfileconfgui.dash_ext.tb</span> <span class="kn">import</span> <span class="n">TracebackComponent</span>
 
 
 <div class="viewcode-block" id="RunEntryComponent"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent">[docs]</a><span class="k">class</span> <span class="nc">RunEntryComponent</span><span class="p">(</span><span class="n">PFCGuiComponent</span><span class="p">):</span>
@@ -188,9 +190,10 @@
         <span class="k">return</span> <span class="p">[</span>
             <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s1">&#39;Running Item&#39;</span><span class="p">),</span>
             <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;run-input&#39;</span><span class="p">),</span>
-            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;run-interval-container&#39;</span><span class="p">),</span>
             <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;run-console-output&#39;</span><span class="p">),</span>
-            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;run-output&#39;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Loading</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;run-output&#39;</span><span class="p">)),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Interval</span><span class="p">(</span><span class="s1">&#39;run-check-interval&#39;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Interval</span><span class="p">(</span><span class="s1">&#39;run-poll-interval&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="p">]</span>
 
 <div class="viewcode-block" id="RunEntryComponent.add_callbacks"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent.add_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">add_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">:</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -203,14 +206,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span>
             <span class="n">app</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_polling</span><span class="p">,</span>
-            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;run-interval-container&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
-            <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-input&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-console-output&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">)]</span>
+            <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;run-poll-interval&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">),</span>
+            <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-input&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-check-interval&#39;</span><span class="p">,</span> <span class="s1">&#39;n_intervals&#39;</span><span class="p">)]</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span>
             <span class="n">app</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stream_output</span><span class="p">,</span>
             <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;run-console-output&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
-            <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-interval&#39;</span><span class="p">,</span> <span class="s1">&#39;n_intervals&#39;</span><span class="p">)]</span>
+            <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-poll-interval&#39;</span><span class="p">,</span> <span class="s1">&#39;n_intervals&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;run-check-interval&#39;</span><span class="p">,</span> <span class="s1">&#39;n_intervals&#39;</span><span class="p">)]</span>
         <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_callbacks</span><span class="p">(</span><span class="n">app</span><span class="p">)</span></div>
 
@@ -223,24 +226,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">orig_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_buffer</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="c1"># TODO [#2]: run item gets stuck polling if run finishes too fast</span>
-        <span class="c1">#</span>
-        <span class="c1"># For now, just sleeping the same amount as the interval to ensure</span>
-        <span class="c1"># that the interval happens at least once. Tried hooking stop interval</span>
-        <span class="c1"># to final output but didn&#39;t work.</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">orig_stdout</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">TracebackComponent</span><span class="p">(</span><span class="s1">&#39;run-output-tb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">component</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">orig_stdout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RunEntryComponent.set_polling"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent.set_polling">[docs]</a>    <span class="k">def</span> <span class="nf">set_polling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">run_output</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="RunEntryComponent.set_polling"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent.set_polling">[docs]</a>    <span class="k">def</span> <span class="nf">set_polling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n_check_intervals</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="c1"># Sets disabled for poll interval</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">dcc</span><span class="o">.</span><span class="n">Interval</span><span class="p">(</span><span class="s1">&#39;run-interval&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+            <span class="c1"># is running, poll should not be disabled</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># not running, poll should be disabled</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="RunEntryComponent.stream_output"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent.stream_output">[docs]</a>    <span class="k">def</span> <span class="nf">stream_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;```python</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">log_output</span><span class="si">}</span><span class="se">\n</span><span class="s1">```&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;overflow&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">})</span></div>
+<div class="viewcode-block" id="RunEntryComponent.stream_output"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent.stream_output">[docs]</a>    <span class="k">def</span> <span class="nf">stream_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_poll_intervals</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_check_intervals</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PythonBlockComponent</span><span class="p">(</span><span class="s1">&#39;run-output-python-block&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_output</span><span class="p">)</span><span class="o">.</span><span class="n">component</span></div>
 
 <div class="viewcode-block" id="RunEntryComponent.reset_log"><a class="viewcode-back" href="../../../../api/pyfileconfgui.pages.navigator.html#pyfileconfgui.pages.navigator.run.RunEntryComponent.reset_log">[docs]</a>    <span class="k">def</span> <span class="nf">reset_log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_buffer</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
