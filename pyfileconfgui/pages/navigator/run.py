@@ -24,7 +24,7 @@ class RunEntryComponent(PFCGuiComponent):
             html.H2('Running Item'),
             html.P(id='run-input'),
             html.Div(id='run-console-output'),
-            html.Div(id='run-output'),
+            dcc.Loading(html.Div(id='run-output')),
             dcc.Interval('run-check-interval', 2000),
             dcc.Interval('run-poll-interval', 500, disabled=True),
         ]
