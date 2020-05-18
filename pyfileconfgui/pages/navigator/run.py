@@ -1,4 +1,4 @@
-import time
+import traceback
 from io import StringIO
 from typing import Union, Sequence
 import sys
@@ -11,6 +11,8 @@ import dash_html_components as html
 
 from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.component import DashPythonComponent
+from pyfileconfgui.dash_ext.python import PythonBlockComponent
+from pyfileconfgui.dash_ext.tb import TracebackComponent
 
 
 class RunEntryComponent(PFCGuiComponent):
@@ -22,9 +24,10 @@ class RunEntryComponent(PFCGuiComponent):
         return [
             html.H2('Running Item'),
             html.P(id='run-input'),
-            html.Div(id='run-interval-container'),
             html.Div(id='run-console-output'),
-            html.Div(id='run-output'),
+            dcc.Loading(html.Div(id='run-output')),
+            dcc.Interval('run-check-interval', 2000),
+            dcc.Interval('run-poll-interval', 500, disabled=True),
         ]
 
     def add_callbacks(self, app: dash.Dash) -> None:
@@ -37,14 +40,14 @@ class RunEntryComponent(PFCGuiComponent):
         self.add_callback(
             app,
             self.set_polling,
-            Output('run-interval-container', 'children'),
-            [Input('run-input', 'children'), Input('run-console-output', 'children')]
+            Output('run-poll-interval', 'disabled'),
+            [Input('run-input', 'children'), Input('run-check-interval', 'n_intervals')]
         )
         self.add_callback(
             app,
             self.stream_output,
             Output('run-console-output', 'children'),
-            [Input('run-interval', 'n_intervals')]
+            [Input('run-poll-interval', 'n_intervals'), Input('run-check-interval', 'n_intervals')]
         )
         super().add_callbacks(app)
 
@@ -57,24 +60,26 @@ class RunEntryComponent(PFCGuiComponent):
         self.is_running = True
         orig_stdout = sys.stdout
         sys.stdout = self.log_buffer
-        output = self.gui.runner.run(path)
-        # TODO [#2]: run item gets stuck polling if run finishes too fast
-        #
-        # For now, just sleeping the same amount as the interval to ensure
-        # that the interval happens at least once. Tried hooking stop interval
-        # to final output but didn't work.
-        time.sleep(0.5)
+        try:
+            output = self.gui.runner.run(path)
+        except Exception as e:
+            sys.stdout = orig_stdout
+            self.is_running = False
+            return TracebackComponent('run-output-tb').component
         sys.stdout = orig_stdout
         self.is_running = False
         return str(output)
 
-    def set_polling(self, path: str, run_output: str):
+    def set_polling(self, path: str, n_check_intervals: int):
+        # Sets disabled for poll interval
         if self.is_running:
-            return dcc.Interval('run-interval', 500)
-        return None
+            # is running, poll should not be disabled
+            return False
+        # not running, poll should be disabled
+        return True
 
-    def stream_output(self, n_intervals: int):
-        return dcc.Markdown(f'```python\n{self.log_output}\n```', style={'overflow': 'auto'})
+    def stream_output(self, n_poll_intervals: int, n_check_intervals: int):
+        return PythonBlockComponent('run-output-python-block', self.log_output).component
 
     def reset_log(self):
         self.log_buffer.truncate(0)

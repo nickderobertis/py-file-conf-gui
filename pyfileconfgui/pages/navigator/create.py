@@ -11,6 +11,7 @@ from pyfileconf.imports.models.statements.obj import ObjectImportStatement
 
 from pyfileconfgui.component import PFCGuiComponent
 from pyfileconfgui.dash_ext.component import DashPythonComponent
+from pyfileconfgui.dash_ext.tb import TracebackComponent
 
 
 class CreateEntryComponent(PFCGuiComponent):
@@ -43,8 +44,7 @@ class CreateEntryComponent(PFCGuiComponent):
         try:
             return self._create_item(n_clicks, section_path, function_class_import)
         except Exception as e:
-            tb = traceback.format_exc()
-            return dcc.Markdown(f'```python\n{tb}```', style={'overflow': 'auto'})
+            return TracebackComponent('create-item-tb').component
 
     def _create_item(self, n_clicks: int, section_path: str, function_class_import: Optional[str]):
         if not section_path:
