@@ -21,3 +21,7 @@ def nested_dict_to_paths(d: dict, begin_path: str = '', sep: str = '/') -> List[
         else:
             raise ValueError(f'expected only dicts, lists, and strings, got {value} of type {type(value)}')
     return paths
+
+
+def convert_name_to_id(name: str) -> str:
+    return name.replace(' ', '-').replace('_', '-')
