@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconfgui package &mdash; py-file-conf-gui 0.1.2 documentation</title>
+  <title>pyfileconfgui package &mdash; py-file-conf-gui 0.2.0 documentation</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.1.2
+                0.2.0
               </div>
             
           
@@ -197,6 +197,7 @@
 <li class="toctree-l2"><a class="reference internal" href="pyfileconfgui.dash_ext.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyfileconfgui.dash_ext.html#module-pyfileconfgui.dash_ext.component">pyfileconfgui.dash_ext.component module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyfileconfgui.dash_ext.html#module-pyfileconfgui.dash_ext.python">pyfileconfgui.dash_ext.python module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyfileconfgui.dash_ext.html#module-pyfileconfgui.dash_ext.query">pyfileconfgui.dash_ext.query module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyfileconfgui.dash_ext.html#module-pyfileconfgui.dash_ext.router">pyfileconfgui.dash_ext.router module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyfileconfgui.dash_ext.html#module-pyfileconfgui.dash_ext.tb">pyfileconfgui.dash_ext.tb module</a></li>
 </ul>
@@ -208,6 +209,8 @@
 <li class="toctree-l4"><a class="reference internal" href="pyfileconfgui.pages.navigator.html#module-pyfileconfgui.pages.navigator.create">pyfileconfgui.pages.navigator.create module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyfileconfgui.pages.navigator.html#module-pyfileconfgui.pages.navigator.edit">pyfileconfgui.pages.navigator.edit module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyfileconfgui.pages.navigator.html#module-pyfileconfgui.pages.navigator.main">pyfileconfgui.pages.navigator.main module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyfileconfgui.pages.navigator.html#module-pyfileconfgui.pages.navigator.refresh">pyfileconfgui.pages.navigator.refresh module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyfileconfgui.pages.navigator.html#module-pyfileconfgui.pages.navigator.reload">pyfileconfgui.pages.navigator.reload module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyfileconfgui.pages.navigator.html#module-pyfileconfgui.pages.navigator.run">pyfileconfgui.pages.navigator.run module</a></li>
 </ul>
 </li>
@@ -244,7 +247,7 @@
 <span id="pyfileconfgui-component-module"></span><h2>pyfileconfgui.component module<a class="headerlink" href="#module-pyfileconfgui.component" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pyfileconfgui.component.PFCGuiComponent">
-<em class="property">class </em><code class="sig-prename descclassname">pyfileconfgui.component.</code><code class="sig-name descname">PFCGuiComponent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconfgui/component.html#PFCGuiComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconfgui.component.PFCGuiComponent" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyfileconfgui.component.</code><code class="sig-name descname">PFCGuiComponent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconfgui/component.html#PFCGuiComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconfgui.component.PFCGuiComponent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyfileconfgui.dash_ext.html#pyfileconfgui.dash_ext.component.DashPythonComponent" title="pyfileconfgui.dash_ext.component.DashPythonComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyfileconfgui.dash_ext.component.DashPythonComponent</span></code></a></p>
 <dl class="py attribute">
 <dt id="pyfileconfgui.component.PFCGuiComponent.gui">
@@ -354,6 +357,11 @@
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="pyfileconfgui.runner.PFCRunner.reload">
+<code class="sig-name descname">reload</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">manager_names</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconfgui/runner.html#PFCRunner.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconfgui.runner.PFCRunner.reload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="pyfileconfgui.runner.PFCRunner.run">

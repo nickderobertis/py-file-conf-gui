@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconfgui.dash_ext.python &mdash; py-file-conf-gui 0.1.2 documentation</title>
+  <title>pyfileconfgui.dash_ext.python &mdash; py-file-conf-gui 0.2.0 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.2
+                0.2.0
               </div>
             
           
@@ -174,9 +174,9 @@
 
 <div class="viewcode-block" id="PythonBlockComponent"><a class="viewcode-back" href="../../../api/pyfileconfgui.dash_ext.html#pyfileconfgui.dash_ext.python.PythonBlockComponent">[docs]</a><span class="k">class</span> <span class="nc">PythonBlockComponent</span><span class="p">(</span><span class="n">DashPythonComponent</span><span class="p">):</span>
 
-<div class="viewcode-block" id="PythonBlockComponent.__init__"><a class="viewcode-back" href="../../../api/pyfileconfgui.dash_ext.html#pyfileconfgui.dash_ext.python.PythonBlockComponent.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="PythonBlockComponent.__init__"><a class="viewcode-back" href="../../../api/pyfileconfgui.dash_ext.html#pyfileconfgui.dash_ext.python.PythonBlockComponent.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s1">&#39;DashPythonComponent&#39;</span><span class="p">,</span> <span class="n">Component</span><span class="p">]]:</span>

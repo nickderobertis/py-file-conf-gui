@@ -25,6 +25,14 @@ pyfileconfgui.dash\_ext.python module
    :undoc-members:
    :show-inheritance:
 
+pyfileconfgui.dash\_ext.query module
+------------------------------------
+
+.. automodule:: pyfileconfgui.dash_ext.query
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyfileconfgui.dash\_ext.router module
 -------------------------------------
 

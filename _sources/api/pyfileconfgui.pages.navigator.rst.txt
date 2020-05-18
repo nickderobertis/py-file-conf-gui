@@ -33,6 +33,22 @@ pyfileconfgui.pages.navigator.main module
    :undoc-members:
    :show-inheritance:
 
+pyfileconfgui.pages.navigator.refresh module
+--------------------------------------------
+
+.. automodule:: pyfileconfgui.pages.navigator.refresh
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconfgui.pages.navigator.reload module
+-------------------------------------------
+
+.. automodule:: pyfileconfgui.pages.navigator.reload
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyfileconfgui.pages.navigator.run module
 ----------------------------------------
 
